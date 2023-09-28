@@ -5,16 +5,29 @@ function getInputValue() {
     separateLines = separateLines.filter((item) => item !== '');
     const removeDups = document.getElementById('removeDups').checked;
     const numbered = document.getElementById('numbered').checked;
+    const unNumbered = document.getElementById('unNumbered').checked;
     const ascending = document.getElementById('rbtnOrderAscending').checked
+    const random = document.getElementById('rbtnOrderRandom').checked
+    const original = document.getElementById('rbtnOrderOriginal').checked
     if (removeDups) {
         separateLines = separateLines.filter((item,
             index) => separateLines.indexOf(item) === index);
     }
     if (ascending) {
         separateLines = separateLines.sort((a, b) => sortAlphabetically(a, b));
-    } else { separateLines = separateLines.sort((a, b) => sortAlphabetically(b, a)); }
+    } else if (random) {
+        separateLines = separateLines.sort(() => Math.random() - 0.5);
+    } else if (original) {
+        separateLines = separateLines.map((e) => e)
+    } else {
+        separateLines = separateLines.sort((a, b) => sortAlphabetically(b, a));
+    }
     if (numbered) {
         separateLines = separateLines.map((e, index) => (index + 1) + '. ' + e)
+    } else if (unNumbered) {
+        separateLines = separateLines.map((e) => e.substring(e.indexOf(". ") + 1))
+    } else {
+        separateLines = separateLines.map((e) => e)
     }
     document.getElementById('output-txt').value = separateLines.join('\r\n')
 }
