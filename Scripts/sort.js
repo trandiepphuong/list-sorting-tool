@@ -36,7 +36,7 @@ function sortAlphabetically(a, b) {
     const specialCharsFormat = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;
     const textA = a.toUpperCase();
     const textB = b.toUpperCase();
-    if (!specialCharsFormat.test(textA) && specialCharsFormat.test(textB)) {
+    if (!specialCharsFormat.test(textA[0]) && specialCharsFormat.test(textB[0])) {
         return -1;
     } else if (
         specialCharsFormat.test(textA) &&
