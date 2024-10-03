@@ -9,9 +9,13 @@ function getInputValue() {
     const ascending = document.getElementById('rbtnOrderAscending').checked
     const random = document.getElementById('rbtnOrderRandom').checked
     const original = document.getElementById('rbtnOrderOriginal').checked
+    const addCharacter = document.getElementById('addCharacter').checked
     if (removeDups) {
         separateLines = separateLines.filter((item,
             index) => separateLines.indexOf(item) === index);
+    }
+    if (addCharacter) {
+        separateLines = separateLines.map((item) => `\"${item}\"`);
     }
     if (ascending) {
         separateLines = separateLines.sort((a, b) => sortAlphabetically(a, b));
@@ -23,7 +27,7 @@ function getInputValue() {
         separateLines = separateLines.sort((a, b) => sortAlphabetically(b, a));
     }
     if (numbered) {
-        separateLines = separateLines.map((e, index) => (index + 1) + '. ' + e)
+        separateLines = separateLines.map((e, index) => `${index + 1}. ${e}`)
     } else if (unNumbered) {
         separateLines = separateLines.map((e) => e.substring(e.indexOf(". ") + 1))
     } else {
@@ -38,22 +42,22 @@ function sortAlphabetically(a, b) {
     const textB = b.toUpperCase();
     if (!specialCharsFormat.test(textA[0]) && specialCharsFormat.test(textB[0])) {
         return -1;
-    } else if (
+    } if (
         specialCharsFormat.test(textA) &&
         !specialCharsFormat.test(textB)
     ) {
         return 1;
     }
-    if (isNaN(textA) && !isNaN(textB)) {
+    if (Number.isNaN(textA) && !Number.isNaN(textB)) {
         return -1;
-    } else if (!isNaN(textA) && isNaN(textB)) {
+    } if (!Number.isNaN(textA) && Number.isNaN(textB)) {
         return 1;
     }
     return textA.localeCompare(textB);
 }
 
 function copyToClipboard() {
-    var copyText = document.getElementById('output-txt');
+    const copyText = document.getElementById('output-txt');
 
     // Select the text field
     copyText.select();
